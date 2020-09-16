@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MUSIC APP</title>
+    <!-- ALL LINKS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="music.css">
+</head>
+
+<body>
+    <div class="main_div">
+        <div class="music_container">
+            <h2 id="title">Taki Taki</h2>
+            <h3 id="artist">DJ Snake</h3>
+            <div class="img_container">
+                <img src="image/hani-2.jpg" alt="" />
+
+            </div>
+            <audio src="music/hani-2.mp3"></audio>
+
+        
+
+            <!-- MUSIC CONTROLS -->
+            <div class="music_controls">
+                <i class="fa fa-backward" id="prev" title="previous"></i>
+                <i class="fa fa-play main-button" id="play" title="play"></i>
+                <i class="fa fa-forward" id="next" title="Next"></i>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const music = document.querySelector("audio");
+        const img = document.querySelector("img");
+        const play = document.getElementById("play");
+        const artist = document.getElementById("artist");
+        const title = document.getElementById("title");
+        const prev = document.getElementById("prev");
+        const next = document.getElementById("next");
+
+        const songs = [
+
+
+            {
+                name: "hani-2",
+                title: "Taki Taki",
+                artist: "DJ Snake",
+            },
+            {
+                name: "hani-3",
+                title: "Ohh Nanana",
+                artist: "Bonde",
+            },
+            {
+                name: "hani-4",
+                title: "Despacito",
+                artist: " cover by J.Fla ",
+            },
+            
+
+
+        ];
+        let isplaying = false;
+        //   FOR PLAY FUNSTION
+        const playMusic = () => {
+            isplaying = true;
+            music.play();
+            play.classList.replace("fa-play", "fa-pause");
+            img.classList.add("anime");
+        };
+        //   FOR PAUSE FUNSTION
+
+        const pauseMusic = () => {
+            isplaying = false;
+            music.pause();
+            play.classList.replace("fa-pause", "fa-play");
+            img.classList.remove("anime");
+        };
+        play.addEventListener('click', () => {
+
+            // /** we can use both code for pause & play //
+
+            // if(isplaying){
+            //     pauseMusic();
+            // }
+            // else{
+            //     playMusic();
+            // }
+
+            isplaying ? pauseMusic() : playMusic();
+
+        });
+
+        // changing the music data
+
+        const loadSong = (songs) => {
+            title.textContent = songs.title;
+            artist.textContent = songs.artist;
+            music.src = "music/" + songs.name + ".mp3";
+            img.src = "image/" + songs.name + ".jpg";
+        };
+        // loadSong(songs[2]);
+
+        songIndex = 0;
+        const nextSong = () => {
+            songIndex = (songIndex + 1) % songs.length;
+            loadSong(songs[songIndex]);
+            playMusic();
+        };
+
+        const prevSong = () => {
+            songIndex = (songIndex - 1 + songs.length) % songs.length;
+            loadSong(songs[songIndex]);
+            playMusic();
+        };
+
+        next.addEventListener("click", nextSong);
+        prev.addEventListener("click", prevSong);
+    </script>
+</body>
+
+</html>
